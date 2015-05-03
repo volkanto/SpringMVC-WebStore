@@ -5,6 +5,7 @@
 	<artifactId>SpringMVC</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	<name>Spring MVC Beginner's Guide</name>
 	<description>Spring MVC Beginner's Guide web store demo application</description>
 
 	<properties>
@@ -37,9 +38,7 @@
 			<version>${jstl.version}</version>
 			<scope>compile</scope>
 		</dependency>
-
-
 	</dependencies>
 
-	<name>Spring MVC Beginner's Guide</name>
+	
 </project>
