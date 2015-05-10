@@ -2,7 +2,10 @@ package com.packt.webstore.domain.repository.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
@@ -99,4 +102,41 @@ public class InMemoryProductRepository implements ProductRepository
 		return productsByCategory;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.packt.webstore.domain.repository.ProductRepository#getProductsByFilter(java.util.Map)
+	 */
+	@Override
+	public Set<Product> getProductsByFilter(Map<String, List<String>> argFilterParams)
+	{
+		Set<Product> productsByBrand = new HashSet<Product>();
+		Set<Product> productsByCategory = new HashSet<Product>();
+
+		Set<String> criterias = argFilterParams.keySet();
+
+		if (criterias.contains("brand"))
+		{
+			for (String brandName : argFilterParams.get("brand"))
+			{
+				for (Product product : this.listOfProducts)
+				{
+					if (brandName.equalsIgnoreCase(product.getManufacturer()))
+					{
+						productsByBrand.add(product);
+					}
+				}
+			}
+		}
+
+		if (criterias.contains("category"))
+		{
+			for (String category : argFilterParams.get("category"))
+			{
+				productsByCategory.addAll(this.getProductsByCategory(category));
+			}
+		}
+
+		productsByCategory.retainAll(productsByBrand);
+
+		return productsByCategory;
+	}
 }
