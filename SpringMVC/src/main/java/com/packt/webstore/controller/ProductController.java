@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.packt.webstore.service.OrderService;
@@ -85,6 +86,18 @@ public class ProductController
 	{
 		argModel.addAttribute("products", this.productService.getProductsByFilter(argFilterParams));
 		return "products";
+	}
+	
+	/**
+	 * @param argProductId
+	 * @param argModel
+	 * @return
+	 */
+	@RequestMapping("/product")
+	public String getProductById(@RequestParam("id") String argProductId, Model argModel)
+	{
+		argModel.addAttribute("product", this.productService.getProductById(argProductId));
+		return "product";
 	}
 	
 }
